@@ -9,6 +9,7 @@ import { HeaderComponent } from './commun/header/header.component';
 import { FooterComponent } from './commun/footer/footer.component';
 import { HomeComponent } from './commun/home/home.component';
 import { PageNotFoundComponent } from './commun/page-not-found/page-not-found.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,12 @@ import { PageNotFoundComponent } from './commun/page-not-found/page-not-found.co
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
