@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../service/cart.service';
 import { Cart, CartItem } from '../../entities/cart.model';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-cart',
@@ -11,8 +13,32 @@ export class CartComponent implements OnInit {
   cart: Cart | null = null;
   userId: number = 1; 
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private http: HttpClient) { }
 
+  checkout() {
+    if (!this.cart || !this.cart.items.length) return;
+  
+    const items = this.cart.items.map(item => ({
+      name: item.name,
+      price: Number(item.price), 
+      quantity: item.quantity
+    }));
+
+  
+    this.http.post<any>('http://localhost:5000/api/payment/create-checkout-session', { items }).subscribe(
+      (response) => {
+        if (response.url) {
+          window.location.href = response.url;
+          this.clearCart();
+        }
+       
+      },
+      (error) => {
+        console.error('Checkout error:', error);
+      }
+    );
+  }
+  
   get total(): number {
     if (!this.cart?.items?.length) return 0;
     return this.cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
