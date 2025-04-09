@@ -1,0 +1,44 @@
+<section class="container mt-5">
+  <h2>Liste des Livraisons</h2>
+
+  <!-- Error alert -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Table of Livraisons -->
+  <table class="table table-bordered mt-3" *ngIf="livraisons.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date de création</th>
+        <th>Date livrée</th>
+        <th>Statut</th>
+        <th>Livreur</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let l of livraisons">
+        <td>{{ l.id || 'N/A' }}</td>
+        <td>{{ l.dateCreation }}</td>
+        <td>{{ l.dateLivree }}</td>
+        <td>{{ l.statusLivraison }}</td>
+        <td>{{ l.livreurNom || 'Non attribué' }}</td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="selectLivraison(l)">Détails</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteLivraison(l.id!)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Selected Livraison details -->
+  <div *ngIf="selectedLivraison" class="mt-4">
+    <h4>Détails de la Livraison #{{ selectedLivraison.id }}</h4>
+    <p><strong>Statut:</strong> {{ selectedLivraison.statusLivraison }}</p>
+    <p><strong>Date de création:</strong> {{ selectedLivraison.dateCreation }}</p>
+    <p><strong>Date livrée:</strong> {{ selectedLivraison.dateLivree }}</p>
+    <p><strong>Livreur:</strong> {{ selectedLivraison.livreurNom || 'Aucun' }}</p>
+  </div>
+</section>
