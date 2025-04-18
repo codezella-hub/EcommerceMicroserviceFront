@@ -1,0 +1,93 @@
+<div class="container my-5">
+  <h2 class="mb-4">Add New Product</h2>
+
+  <form [formGroup]="productForm" (ngSubmit)="submitProduct()" enctype="multipart/form-data">
+    <div class="row g-3">
+
+      <!-- Product Name -->
+      <div class="col-md-6">
+        <label class="form-label">Product Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+        <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger">
+          Product name is required.
+        </div>
+      </div>
+
+      <!-- Brand -->
+      <div class="col-md-6">
+        <label class="form-label">Brand</label>
+        <input type="text" class="form-control" formControlName="brand" />
+        <div *ngIf="productForm.get('brand')?.invalid && productForm.get('brand')?.touched" class="text-danger">
+          Brand is required.
+        </div>
+      </div>
+
+      <!-- SKU -->
+      <div class="col-md-6">
+        <label class="form-label">SKU</label>
+        <input type="text" class="form-control" formControlName="sku" />
+      </div>
+
+      <!-- Price -->
+      <div class="col-md-6">
+        <label class="form-label">Price</label>
+        <input type="number" class="form-control" formControlName="price" />
+        <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-danger">
+          Price must be a positive number.
+        </div>
+      </div>
+
+      <!-- Stock Quantity -->
+      <div class="col-md-6">
+        <label class="form-label">Stock Quantity</label>
+        <input type="number" class="form-control" formControlName="stockQuantity" />
+      </div>
+
+      <!-- Discount Percentage -->
+      <div class="col-md-6">
+        <label class="form-label">Discount (%)</label>
+        <input type="number" class="form-control" formControlName="discountPercentage" />
+      </div>
+
+      <!-- Product Image -->
+      <div class="col-md-6">
+        <label class="form-label">Product Image</label>
+        <input type="file" class="form-control" (change)="onImageSelected($event)" />
+        <img *ngIf="imagePreview" [src]="imagePreview" class="mt-2" alt="Preview" width="150" />
+      </div>
+
+      <!-- Category -->
+      <div class="col-md-6">
+        <label class="form-label">Category</label>
+        <select class="form-select" formControlName="category">
+          <option *ngFor="let cat of categories" [ngValue]="cat">{{ cat.name }}</option>
+          <option disabled>────────────</option>
+          <option [ngValue]="null" (click)="showNewCategoryInput = true">➕ Add New Category</option>
+        </select>
+        <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="text-danger">
+          Category is required.
+        </div>
+      </div>
+
+      <!-- New Category Input -->
+      <div *ngIf="showNewCategoryInput" class="col-md-6">
+        <label class="form-label">New Category Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="newCategory" name="newCategory" />
+          <button type="button" class="btn btn-success" (click)="addNewCategory()">Add</button>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-12">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" formControlName="description" rows="3"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-primary">Save Product</button>
+      </div>
+    </div>
+  </form>
+</div>
