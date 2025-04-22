@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cart, CartItem } from '../entities/cart.model';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +19,14 @@ export class CartService {
   };
 
   constructor(private http: HttpClient) { }
-
+  private cartSubject = new BehaviorSubject<Cart | null>(null);
+  cart$ = this.cartSubject.asObservable();
   // Get cart by user ID
   getCartByUserId(userId: number): Observable<Cart> {
     return this.http.get<Cart>(`${this.apiUrl}/${userId}`, this.httpOptions);
+  }
+  refreshCart(userId: number): void {
+    this.getCartByUserId(userId); 
   }
 
   // Get cart total

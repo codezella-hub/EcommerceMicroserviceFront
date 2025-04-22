@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/product-categories/services/product/product.service'
 import { Products } from 'src/app/product-categories/models/products'
+/////////
+import {CartItem } from '../../../public/entities/cart.model';
+import { CartService } from '../../../public/service/cart.service';
 
 
 @Component({
@@ -16,7 +19,7 @@ export class SinglePageProductComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-   // private cartService: CartService
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -44,8 +47,24 @@ export class SinglePageProductComponent implements OnInit {
   }
 
   // Add the product to the cart
-  addToCart(product: Products): void {
-    //this.cartService.addProductToCart(product);
-    console.log(`${product.name} added to cart!`);
-  }
+  addToCart(product: Products, event: MouseEvent): void {
+      event.stopPropagation();
+    
+      const userId = 1; // 🔄 Remplace ceci par l'ID réel de l'utilisateur (depuis le token ou un service)
+      
+      const cartItem: CartItem = {
+        productId: product.id,
+        quantity: 1,
+        price: product.price
+      };
+    
+      this.cartService.addToCart(userId, cartItem).subscribe({
+        next: (response) => {
+          console.log('✅ Produit ajouté au panier :', response);
+        },
+        error: (error) => {
+          console.error('❌ Erreur lors de l\'ajout au panier :', error);
+        }
+      });
+    }
 }

@@ -14,8 +14,6 @@ import { PageNotFoundComponent } from './commun/page-not-found/page-not-found.co
 import { PublicModule } from './public/public.module';
 import { SuccessComponent } from './public/components/success/success.component';
 import { CancelComponent } from './public/components/cancel/cancel.component';
-
-import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 
 
