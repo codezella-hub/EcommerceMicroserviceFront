@@ -10,9 +10,14 @@ import { HeaderComponent } from './commun/header/header.component';
 import { FooterComponent } from './commun/footer/footer.component';
 import { HomeComponent } from './commun/home/home.component';
 import { PageNotFoundComponent } from './commun/page-not-found/page-not-found.component';
+
 import { PublicModule } from './public/public.module';
 import { SuccessComponent } from './public/components/success/success.component';
 import { CancelComponent } from './public/components/cancel/cancel.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+
 
 @NgModule({
   declarations: [
@@ -28,9 +33,11 @@ import { CancelComponent } from './public/components/cancel/cancel.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     PublicModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule, // Add ReactiveFormsModule here
+
   ],
   providers: [],
   bootstrap: [AppComponent]
