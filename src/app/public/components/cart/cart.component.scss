@@ -1,0 +1,221 @@
+.cart_area {
+    .cart-table {
+        .table {
+            margin-bottom: 30px;
+            
+            thead {
+                background-color: #f4f4f4;
+                
+                th {
+                    padding: 12px;
+                    text-align: center;
+                    
+                    i {
+                        color: #666;
+                    }
+                }
+            }
+            
+            tbody {
+                tr {
+                    td {
+                        text-align: center;
+                        vertical-align: middle;
+                        
+                        img {
+                            max-width: 60px;
+                        }
+                        
+                        .qty-text {
+                            width: 70px;
+                            text-align: center;
+                            padding: 5px;
+                            border: 1px solid #ebebeb;
+                        }
+                        
+                        i.icofont-close {
+                            cursor: pointer;
+                            color: #dc3545;
+                            
+                            &:hover {
+                                color: darken(#dc3545, 10%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .cart-apply-coupon {
+        padding: 30px;
+        background-color: #f4f4f4;
+        
+        .coupon-form {
+            form {
+                display: flex;
+                gap: 10px;
+                
+                input {
+                    flex: 1;
+                }
+            }
+        }
+    }
+    
+    .cart-total-area {
+        padding: 30px;
+        background-color: #f4f4f4;
+        
+        .table {
+            td {
+                padding: 10px 0;
+                border-bottom: 1px solid #ebebeb;
+                
+                &:last-child {
+                    text-align: right;
+                    font-weight: 500;
+                }
+            }
+        }
+        
+        .btn {
+            margin-top: 20px;
+        }
+    }
+}
+
+.cart-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.cart-content {
+  display: flex;
+  gap: 30px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.cart-items {
+  flex: 1;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  gap: 20px;
+
+  .item-details {
+    flex: 1;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1em;
+    }
+
+    .price {
+      color: #666;
+      margin: 5px 0;
+    }
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      padding: 5px 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .item-total {
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
+  }
+
+  .remove-btn {
+    padding: 8px 15px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: #cc0000;
+    }
+  }
+}
+
+.cart-summary {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  height: fit-content;
+
+  .total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &.clear-cart {
+      background: #ff4444;
+      color: white;
+
+      &:hover {
+        background: #cc0000;
+      }
+    }
+
+    &.checkout-btn {
+      background: #1D2536;
+      color: white;
+
+      &:hover {
+        background: #354058;
+      }
+    }
+  }
+}
