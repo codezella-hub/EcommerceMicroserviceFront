@@ -1,8 +1,10 @@
 export interface Cart {
   userId: number;
   items: CartItem[];
-  total: number;
+  totalPrice: number;           
+  discountPercentage: number;  
 }
+
 
 export interface CartItem {
   id: number;

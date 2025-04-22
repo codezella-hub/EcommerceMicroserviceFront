@@ -15,6 +15,10 @@ export class CartComponent implements OnInit {
   cart: Cart | null = null;
   userId: number = 1; 
   userEmail: string = 'sofiennemrabet16@gmail.com'; // Email de l'utilisateur
+  promoCode: string = '';
+  promoMessage: string = '';
+  
+
 
   constructor(
     private cartService: CartService,
@@ -28,17 +32,13 @@ export class CartComponent implements OnInit {
     if (!this.cart || !this.cart.items.length) return;
   
     const items = this.cart.items.map(item => ({
-      productId: item.productId,  
+      productId: item.productId,
       name: item.name,
       price: Number(item.price),
       quantity: item.quantity
     }));
-    
-
-  
-   
     const dateCommande = new Date();
-    
+  
     this.http.post<any>('http://localhost:5000/api/payment/create-checkout-session', {
       items,
       userId: this.userId,
@@ -47,22 +47,21 @@ export class CartComponent implements OnInit {
     .subscribe(
       (response) => {
         if (response.url) {
-          window.location.href = response.url;   // Redirige vers le paiement
-          this.clearCart(); // Vider le panier après le paiement
-
-         
+          window.location.href = response.url; 
+          this.clearCart();
+          this.sendOrderConfirmationEmail(this.userEmail);
         }
       },
       (error) => {
         console.error('Erreur lors du paiement:', error);
       }
     );
-     // Appel de l'API backend pour envoyer un e-mail après checkout
-     this.sendOrderConfirmationEmail(this.userEmail);
   }
   sendOrderConfirmationEmail(email: string) {
-    this.http.post<any>(`http://localhost:8222/api/cart/${this.userId}/checkout`, email)
-      .subscribe(
+this.http.post<any>(`http://localhost:8222/api/cart/${this.userId}/checkout`, {
+  email: email
+})
+ .subscribe(
         (response) => {
           console.log('E-mail de confirmation envoyé:', response);
         },
@@ -73,9 +72,37 @@ export class CartComponent implements OnInit {
       
   }
   get total(): number {
-    if (!this.cart?.items?.length) return 0;
-    return this.cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    if (!this.cart) return 0;
+  
+    const subtotal = this.cart.totalPrice;
+    const discount = this.cart.discountPercentage || 0;
+    return subtotal * (1 - discount / 100);
   }
+  
+  
+  applyPromoCode() {
+    if (!this.promoCode) {
+      this.promoMessage = 'Veuillez entrer un code promo.';
+      return;
+    }
+  
+    const headers = { 'Content-Type': 'application/json' };
+  
+    this.http.post<Cart>(`http://localhost:8222/api/cart/${this.userId}/apply-promo?code=${this.promoCode}`, {}, { headers })
+      .subscribe({
+        next: (updatedCart) => {
+          this.cart = updatedCart;
+          this.promoMessage = `Promo appliquée: ${this.promoCode.toUpperCase()}`;
+        },
+        error: (err) => {
+          this.promoMessage = 'Code promo invalide.';
+          console.error('Promo error:', err);
+        }
+      });
+  }
+  
+  
+    
 
   ngOnInit(): void {
     this.loadCart();
