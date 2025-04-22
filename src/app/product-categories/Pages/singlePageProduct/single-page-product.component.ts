@@ -61,9 +61,11 @@ export class SinglePageProductComponent implements OnInit {
       this.cartService.addToCart(userId, cartItem).subscribe({
         next: (response) => {
           console.log('✅ Produit ajouté au panier :', response);
+          alert('✅ Produit ajouté au panier');
         },
         error: (error) => {
           console.error('❌ Erreur lors de l\'ajout au panier :', error);
+          alert('❌ Erreur lors de l\'ajout au panier');
         }
       });
     }
