@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:8222/api/prod/products/';
+  private apiUrl = 'http://localhost:8089/api/prod/products/';
 
   constructor(private http: HttpClient) {}
 
@@ -48,10 +48,10 @@ export class ProductService {
 
 
   addProductWithImage(formData: FormData): Observable<any> {
-    return this.http.post('http://localhost:8222/api/prod/products/with-image', formData);
+    return this.http.post('http://localhost:8089/api/prod/products/with-image', formData);
   }
-  updateProductWithImage(formData: FormData): Observable<any> {
-    return this.http.put(`http://localhost:8222/api/prod/products`, formData);
+  updateProductWithImage(id :string , formData: FormData): Observable<any> {
+    return this.http.put(`http://localhost:8089/api/prod/products/with-image/${id}`, formData);
   }
 
 }

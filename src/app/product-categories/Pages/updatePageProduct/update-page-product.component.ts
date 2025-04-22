@@ -26,13 +26,11 @@ export class UpdatePageProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Récupération ID produit
-    this.route.queryParams.subscribe(params => {
-      this.productId = params['id'];
+    this.route.paramMap.subscribe(params => {
+      this.productId = params.get('id')!;
       this.loadProduct();
     });
 
-    // Form vide initialisé
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -44,10 +42,9 @@ export class UpdatePageProductComponent implements OnInit {
       category: [null, Validators.required],
     });
 
-    // Charger catégories
     this.categoriesService.getAllCategories().subscribe({
       next: (res) => (this.categories = res),
-      error: (err) => console.error('Catégories non chargées:', err),
+      error: (err) => console.error('Categories not loaded:', err),
     });
   }
 
@@ -67,7 +64,7 @@ export class UpdatePageProductComponent implements OnInit {
 
         this.imagePreview = `http://localhost:8089/uploads/${product.imageUrl}`;
       },
-      error: (err) => console.error('Produit non trouvé:', err),
+      error: (err) => console.error('Product not found:', err),
     });
   }
 
@@ -84,7 +81,6 @@ export class UpdatePageProductComponent implements OnInit {
   submitUpdate(): void {
     if (this.productForm.valid) {
       const updatedProduct = this.productForm.value;
-
       const formData = new FormData();
       formData.append('product', JSON.stringify({ ...updatedProduct, id: this.productId }));
 
@@ -92,9 +88,9 @@ export class UpdatePageProductComponent implements OnInit {
         formData.append('file', this.selectedImage);
       }
 
-      this.productService.updateProductWithImage(formData).subscribe({
-        next: () => console.log('✅ Produit mis à jour'),
-        error: (err) => console.error('❌ Erreur MAJ produit:', err),
+      this.productService.updateProductWithImage(this.productId, formData).subscribe({
+        next: () => console.log('✅ Product updated successfully'),
+        error: (err) => console.error('❌ Error updating product:', err),
       });
     }
   }
