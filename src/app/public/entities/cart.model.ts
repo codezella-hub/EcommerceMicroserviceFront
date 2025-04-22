@@ -7,9 +7,9 @@ export interface Cart {
 
 
 export interface CartItem {
-  id: number;
-  productId: number;
+  id?: number;
+  productId: string;
   quantity: number;
   price: number;
-  name: string;
+  name?: string;
 }
