@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +31,13 @@ export class ProductService {
     return this.http.put(`${this.apiUrl}${id}`, product);
   }
 
-  // Supprimer un produit
   deleteProduct(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}${id}`);
+    return this.http.delete<any>(`${this.apiUrl}${id}`).pipe(
+      catchError((error) => {
+        console.error('Error deleting product:', error);
+        return throwError(() => new Error('Failed to delete product'));
+      })
+    );
   }
 
   // Obtenir les produits par catégorie
@@ -40,10 +45,13 @@ export class ProductService {
     return this.http.get<any[]>(`${this.apiUrl}category/${categoryId}`);
   }
 
-  
-  
+
+
   addProductWithImage(formData: FormData): Observable<any> {
     return this.http.post('http://localhost:8222/api/prod/products/with-image', formData);
   }
-  
+  updateProductWithImage(formData: FormData): Observable<any> {
+    return this.http.put(`http://localhost:8222/api/prod/products`, formData);
+  }
+
 }

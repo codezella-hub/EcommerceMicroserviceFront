@@ -1,0 +1,53 @@
+<div class="wishlist-table section_padding_100 clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="cart-table wishlist-table">
+          <div class="table-responsive">
+            <table class="table table-bordered mb-30">
+              <thead>
+              <tr>
+                <th scope="col"><i class="icofont-ui-delete"></i></th>
+                <th scope="col">Image</th>
+                <th scope="col">Product</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let product of products">
+                <th scope="row">
+                  <button class="btn btn-link p-0" style="color: red" (click)="removeProduct(product.id )">
+                    <i class="icofont-close"></i>
+                  </button>
+                </th>
+                <td>
+                  <img [src]="'http://localhost:8089/uploads/' + product.imageUrl" class="card-img-top" [alt]="product.name">
+
+                </td>
+                <td>
+                  <a [routerLink]="['/product-categories/single-product', product.id]">{{ product.name }}</a>
+                </td>
+                <td>${{ product.price }}</td>
+                <td>
+                  <div class="quantity">
+                    <p>{{ product.stockQuantity }}</p>
+                  </div>
+                </td>
+                <td><a href="#" class="btn btn-primary btn-sm" (click)="Update(product)">Update</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cart-footer text-right">
+          <div class="back-to-shop">
+            <a href="#" class="btn btn-primary">Add new product </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
