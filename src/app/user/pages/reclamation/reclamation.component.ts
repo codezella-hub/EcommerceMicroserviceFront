@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import jsPDF from 'jspdf';
 import { ReclamationService } from 'src/app/admin/services/reclamation/reclamation.service';
 import { Reclamation } from 'src/app/models/reclamation';
+
 
 declare var $: any;
 
 @Component({
   selector: 'app-reclamation',
   templateUrl: './reclamation.component.html',
-  styleUrls: ['./reclamation.component.scss']
+  styleUrls: ['./reclamation.component.css']
 })
 export class ReclamationComponent implements OnInit {
   @ViewChild('addModal') addModalRef!: ElementRef;
@@ -18,6 +20,8 @@ export class ReclamationComponent implements OnInit {
   userReclamations: Reclamation[] = [];
   selectedReclamationId: number | null = null;
   selectedReclamation: Reclamation = new Reclamation();
+  selectedTypeFilter: string = 'ALL'; // Default is ALL
+  
   
   // Set your static user ID here
   currentUserId: string = 'azereza54145154a';
@@ -58,10 +62,25 @@ export class ReclamationComponent implements OnInit {
     );
   }
 
+  
+
   filterUserReclamations() {
-    this.userReclamations = this.allReclamations.filter(
+    const filteredByUser = this.allReclamations.filter(
       rec => rec.user_id === this.currentUserId
     );
+  
+    if (this.selectedTypeFilter === 'ALL') {
+      this.userReclamations = filteredByUser;
+    } else {
+      this.userReclamations = filteredByUser.filter(
+        rec => rec.type === this.selectedTypeFilter
+      );
+    }
+  }
+  
+  onTypeFilterChange(newType: string) {
+    this.selectedTypeFilter = newType;
+    this.filterUserReclamations();
   }
 
   get addControls() {
@@ -151,4 +170,53 @@ export class ReclamationComponent implements OnInit {
       }
     );
   }
+
+
+
+// Add this method to your ReclamationComponent class
+generatePDF() {
+  const doc = new jsPDF();
+  let yPos = 20;
+
+  // Add title
+  doc.setFontSize(18);
+  doc.text('Reclamation Report', 14, 15);
+  
+  // Add current date
+  doc.setFontSize(12);
+  doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 25);
+  
+  // Add filter information
+  doc.text(`Filter Type: ${this.selectedTypeFilter}`, 14, 35);
+  doc.text(`Total Reclamations: ${this.userReclamations.length}`, 14, 45);
+
+  // Create table headers
+  doc.setFontSize(12);
+  //doc.setFont(undefined, 'bold');
+  doc.text('Title', 14, 60);
+  doc.text('Type', 70, 60);
+  doc.text('Description', 130, 60);
+  //doc.setFont(undefined, 'normal');
+
+  // Add reclamation data
+  this.userReclamations.forEach((reclamation, index) => {
+    yPos = 70 + (index * 40);
+    
+    if (yPos > 280) { // Add new page if needed
+      doc.addPage();
+      yPos = 20;
+    }
+
+    doc.text(reclamation.titre, 14, yPos);
+    doc.text(reclamation.type, 70, yPos);
+    doc.text(doc.splitTextToSize(reclamation.description, 50), 130, yPos);
+    
+    // Add separator line
+    doc.setLineWidth(0.5);
+    doc.line(14, yPos + 5, 200, yPos + 5);
+  });
+
+  // Save the PDF
+  doc.save(`reclamations_${new Date().toISOString()}.pdf`);
+}
 }

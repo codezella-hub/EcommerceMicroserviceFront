@@ -18,9 +18,23 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10">
+                                <!-- Add this search section -->
+                                <div class="col-12 mb-4">
+                                    <div class="input-group">
+                                        <input type="text" 
+                                               class="form-control" 
+                                               placeholder="Search by title..."
+                                               [(ngModel)]="searchTerm">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="icofont-search"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                 <div class="shop_list_product_area">
                     <div class="row">
-                        <ng-container *ngFor="let reclamation of reclamations">
+                        <ng-container *ngFor="let reclamation of filteredReclamations">
                             <div class="col-12">
                                 <div class="single-product-area mb-30">
                                     <div >

@@ -162,4 +162,15 @@ export class ReclamationComponent implements OnInit {
       }
     });
   }
+
+  // Add this property to your component
+searchTerm: string = '';
+
+// Add this getter to filter reclamations
+get filteredReclamations(): Reclamation[] {
+  if (!this.searchTerm) return this.reclamations;
+  return this.reclamations.filter(rec => 
+    rec.titre.toLowerCase().includes(this.searchTerm.toLowerCase())
+  );
+}
 }

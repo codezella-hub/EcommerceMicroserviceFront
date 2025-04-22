@@ -10,6 +10,8 @@ import { FooterComponent } from './commun/footer/footer.component';
 import { HomeComponent } from './commun/home/home.component';
 import { PageNotFoundComponent } from './commun/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChatbotComponent } from './public/components/chat-bot/chat-bot.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,13 @@ import { HttpClientModule } from '@angular/common/http';
     FooterComponent,
     HomeComponent,
     PageNotFoundComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
