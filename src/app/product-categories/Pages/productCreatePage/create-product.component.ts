@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/product-categories/services/product/product.service';
+import { CategoriesService } from '../../services/product/categories.service';
 import { Products } from 'src/app/product-categories/models/products';
 import { Category } from 'src/app/product-categories/models/category';
 
@@ -11,18 +12,17 @@ import { Category } from 'src/app/product-categories/models/category';
 })
 export class CreateProductComponent implements OnInit {
   productForm!: FormGroup;
-  categories: Category[] = [
-    { id: '1', name: 'Dresses', description: '' },
-    { id: '2', name: 'Shirts', description: '' },
-    { id: '3', name: 'Jeans', description: '' },
-    { id: '4', name: 'Shoes', description: '' }
-  ];
+  categories: Category[] = [];
   newCategory: string = '';
   showNewCategoryInput = false;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
-  constructor(private productService: ProductService, private fb: FormBuilder) {}
+  constructor(
+    private productService: ProductService,
+    private categoriesService: CategoriesService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
@@ -36,17 +36,26 @@ export class CreateProductComponent implements OnInit {
       category: [null, Validators.required],
       image: [null]
     });
+
+    this.categoriesService.getAllCategories().subscribe({
+      next: (res) => {
+        this.categories = res;
+      },
+      error: (err) => {
+        console.error('Error fetching categories:', err);
+      }
+    });
   }
 
-  onImageSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedImage = file;
+  onImageSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length) {
+      this.selectedImage = fileInput.files[0];
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedImage);
     }
   }
 
@@ -54,7 +63,7 @@ export class CreateProductComponent implements OnInit {
     const catName = this.newCategory.trim();
     if (catName && !this.categories.find(cat => cat.name === catName)) {
       const newCat: Category = {
-        id: Date.now().toString(), // or use uuid
+        id: Date.now().toString(),
         name: catName,
         description: ''
       };
@@ -64,7 +73,6 @@ export class CreateProductComponent implements OnInit {
     this.newCategory = '';
     this.showNewCategoryInput = false;
   }
-
 
   resetFileInput(): void {
     this.selectedImage = null;
@@ -76,7 +84,6 @@ export class CreateProductComponent implements OnInit {
     if (this.productForm.valid) {
       const formValues = this.productForm.value;
 
-      // ✅ Use class Products
       const product = new Products();
       product.name = formValues.name;
       product.description = formValues.description;
@@ -86,16 +93,15 @@ export class CreateProductComponent implements OnInit {
       product.sku = formValues.sku;
       product.discountPercentage = formValues.discountPercentage;
       product.category = formValues.category;
-      product.isActive = true; // default value
-      product.imageUrl = ''; // will be handled by backend
+      product.isActive = true;
+      product.imageUrl = '';
 
       const formData = new FormData();
-      formData.append('product', JSON.stringify(product)); // match @RequestParam("product")
+      formData.append('product', JSON.stringify(product));
       if (this.selectedImage) {
-      formData.append('file', this.selectedImage); // match @RequestParam("file")
+        formData.append('file', this.selectedImage);
       }
-
-
+console.log('Form Data:', product);
       this.productService.addProductWithImage(formData).subscribe({
         next: (res) => {
           console.log('✅ Produit ajouté avec succès :', res);
