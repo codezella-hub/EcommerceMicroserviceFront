@@ -38,6 +38,6 @@ export class ListPageProductAdminComponent implements OnInit {
   }
   Update(product: Products): void {
     // Here you can implement adding to the cart logic (call a cart service or something else)
-    console.log(`${product.name} added to cart!`);
+
   }
 }

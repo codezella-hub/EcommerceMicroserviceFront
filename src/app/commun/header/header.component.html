@@ -76,7 +76,9 @@
                             <ul>
                                 <li><a routerLink="/">Home</a></li>
                                 <li><a routerLink="/user">User</a></li>
-                                <li><a routerLink="/product-categories">Product</a></li>
+                              <li><a [routerLink]="'/product-categories/products'">Shop</a></li>
+                              <li><a [routerLink]="'/product-categories/create-product'">Add Porduct</a></li>
+                              <li><a [routerLink]="'/product-categories/list-product-admin'">Admin List Products </a></li>
                                 <!--if admin then loula else thenya "louay"-->
                                 <li><a routerLink="/admin/reclamations">Reclamations</a></li>
                                 <!--<li><a routerLink="/user/reclamations">Reclamations</a></li>-->
@@ -84,7 +86,7 @@
                                 <li><a routerLink="/contact">Contact</a></li> <!-- Assuming you have a contact route -->
                             </ul>
                         </div>
-                        
+
                     </div>
 
                     <!-- Hero Meta -->
@@ -108,7 +110,7 @@
                         <div class="cart-area">
                             <div class="cart--btn" [routerLink]="['/cart']"><i class="icofont-cart"></i></div>
 
-                            
+
                         </div>
 
                         <!-- Account -->

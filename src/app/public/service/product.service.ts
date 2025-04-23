@@ -19,7 +19,7 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProductById(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/${id}`);
+    return this.http.get<Product>(`http://localhost:8222/api/cart/send-product/${id}`);
   }
 
   getAllProducts(): Observable<Product[]> {
