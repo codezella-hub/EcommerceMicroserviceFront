@@ -22,10 +22,10 @@ export class CartService {
   private cartSubject = new BehaviorSubject<Cart | null>(null);
   cart$ = this.cartSubject.asObservable();
   // Get cart by user ID
-  getCartByUserId(userId: number): Observable<Cart> {
+  getCartByUserId(userId: string): Observable<Cart> {
     return this.http.get<Cart>(`${this.apiUrl}/${userId}`, this.httpOptions);
   }
-  refreshCart(userId: number): void {
+  refreshCart(userId: string): void {
     this.getCartByUserId(userId); 
   }
 
@@ -35,12 +35,12 @@ export class CartService {
   }
 
   // Add item to cart
-  addToCart(userId: number, cartItem: CartItem): Observable<CartItem> {
+  addToCart(userId: string, cartItem: CartItem): Observable<CartItem> {
     return this.http.post<CartItem>(`${this.apiUrl}/${userId}/items`, cartItem, this.httpOptions);
   }
 
   // Update item quantity
-  updateItemQuantity(userId: number, itemId: number, quantity: number): Observable<CartItem> {
+  updateItemQuantity(userId: string, itemId: number, quantity: number): Observable<CartItem> {
     return this.http.put<CartItem>(
       `${this.apiUrl}/${userId}/items/${itemId}/quantity?quantity=${quantity}`,
       {},
@@ -49,12 +49,12 @@ export class CartService {
   }
 
   // Remove item from cart
-  removeFromCart(userId: number, itemId: number): Observable<void> {
+  removeFromCart(userId: string, itemId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/items/${itemId}`, this.httpOptions);
   }
 
   // Clear cart
-  clearCart(userId: number): Observable<void> {
+  clearCart(userId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/clear`, this.httpOptions);
   }
 
@@ -67,4 +67,15 @@ export class CartService {
   deleteCart(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/delete`, this.httpOptions);
   }
+  getHistoriesByUserId(userId: String): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:5000/api/payment/history/user/${userId}`, this.httpOptions);
+  }
+  deleteHistorie(Id: String): Observable<any[]> {
+    return this.http.delete<any[]>(`http://localhost:5000/api/payment/${Id}`, this.httpOptions);
+  }
+  updateHistorie(Id: string, body: any): Observable<any[]> {
+    return this.http.put<any[]>(`http://localhost:5000/api/payment/${Id}`, body, this.httpOptions);
+  }
+  
+  
 }

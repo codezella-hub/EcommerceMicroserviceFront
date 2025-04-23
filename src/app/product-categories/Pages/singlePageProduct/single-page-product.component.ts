@@ -50,7 +50,7 @@ export class SinglePageProductComponent implements OnInit {
   addToCart(product: Products, event: MouseEvent): void {
       event.stopPropagation();
     
-      const userId = 1; // 🔄 Remplace ceci par l'ID réel de l'utilisateur (depuis le token ou un service)
+      const userId:string = "1"; // 🔄 Remplace ceci par l'ID réel de l'utilisateur (depuis le token ou un service)
       
       const cartItem: CartItem = {
         productId: product.id,

@@ -14,13 +14,16 @@ import { CancelComponent } from './public/components/cancel/cancel.component';
 
 import { ProductComponent } from './product-categories/Pages/productListPage/product.component';
 import { CreateProductComponent } from './product-categories/Pages/productCreatePage/create-product.component';
+import { OrdersComponent } from './public/components/orders/orders.component';
 
 
 const routes: Routes = [
   { path: "" , component: HomeComponent},
+
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "cart", component: CartComponent },
+  {path:"orders",component:OrdersComponent},
   { path: "success", component: SuccessComponent },
   { path: "cancel", component: CancelComponent },
   { path: "chatbot", component: ChatbotComponent },
@@ -29,6 +32,7 @@ const routes: Routes = [
   { path: "user", loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
   { path: "product-categories", loadChildren: () => import('./product-categories/product-categories.module').then(m => m.ProductCategoriesModule) },
   { path: "**", component: PageNotFoundComponent }
+
 ];
 
 
