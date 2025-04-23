@@ -4,20 +4,20 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { ProductComponent } from './pages/product/product.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
-
-
+import { ReclamationComponent } from './pages/reclamation/reclamation.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     ProductComponent,
     CartComponent,
+    ReclamationComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    ReactiveFormsModule // Ensure ReactiveFormsModule is imported
-
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class UserModule { }
