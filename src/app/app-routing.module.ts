@@ -12,6 +12,7 @@ import { CancelComponent } from './public/components/cancel/cancel.component';
 
 import { ProductComponent } from './product-categories/Pages/productListPage/product.component';
 import { CreateProductComponent } from './product-categories/Pages/productCreatePage/create-product.component';
+import { OrdersComponent } from './public/components/orders/orders.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:"login", component : LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'cart', component: CartComponent},
+  {path:'orders',component:OrdersComponent},
   {path:'success', component: SuccessComponent},
   {path:'cancel', component: CancelComponent},
   {path:'admin',loadChildren:()=>import('./admin/admin.module').then(m=>m.AdminModule) },

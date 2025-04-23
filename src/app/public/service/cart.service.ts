@@ -67,4 +67,15 @@ export class CartService {
   deleteCart(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/delete`, this.httpOptions);
   }
+  getHistoriesByUserId(userId: String): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:5000/api/payment/history/user/${userId}`, this.httpOptions);
+  }
+  deleteHistorie(Id: String): Observable<any[]> {
+    return this.http.delete<any[]>(`http://localhost:5000/api/payment/${Id}`, this.httpOptions);
+  }
+  updateHistorie(Id: string, body: any): Observable<any[]> {
+    return this.http.put<any[]>(`http://localhost:5000/api/payment/${Id}`, body, this.httpOptions);
+  }
+  
+  
 }

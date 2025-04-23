@@ -1,0 +1,94 @@
+<!-- Breadcumb Area -->
+<div class="breadcumb_area">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12">
+          <h5>My Account</h5>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item active">My Account</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- My Account Area -->
+  <section class="my-account-area section_padding_100_50">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <div class="my-account-navigation mb-50">
+            <ul>
+              <li><a routerLink="/account">Dashboard</a></li>
+              <li class="active"><a routerLink="/orders">Orders</a></li>
+              <li><a href="#">Downloads</a></li>
+              <li><a href="#">Addresses</a></li>
+              <li><a href="#">Account Details</a></li>
+              <li><a href="/login">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+  
+        <div class="col-12 col-lg-9">
+          <div class="my-account-content mb-50">
+            <div class="cart-table">
+              
+              <div *ngIf="!loading && orders.length === 0" class="alert alert-info">
+                Aucune commande trouvée.
+              </div>
+  
+              <div *ngIf="orders.length > 0" class="table-responsive">
+                <table class="table table-bordered mb-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">Order</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Quantité</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let order of orders; let i = index">
+                      <th scope="row">#{{ i + 1 }}</th>
+                      <td>{{ order.name }}</td>
+                      <td>{{ order.quantity }}</td>
+                      <td>{{ order.orderDate | date: 'mediumDate' }}</td>
+                      <td>${{ order.totalPrice?.toFixed(2) }}</td>
+                      <td>
+                         <button class="btn btn-primary btn-sm m-1" (click)="openEditModal(order)">Update</button>
+                        <button class="btn btn-danger btn-sm m-1" (click)="deleteOrder(order)">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<div class="modal fade" tabindex="-1" role="dialog" [ngClass]="{ 'show d-block': isEditModalOpen }" *ngIf="selectedOrder">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <h5 class="modal-title">Modifier la quantité</h5>
+          <button type="button" class="close" (click)="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <label>Nouvelle quantité :</label>
+          <input type="number" class="form-control" [(ngModel)]="editedQuantity" min="1" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+          <button class="btn btn-success" (click)="updateOrder()">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
