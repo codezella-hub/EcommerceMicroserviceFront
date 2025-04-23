@@ -10,12 +10,12 @@ import { HeaderComponent } from './commun/header/header.component';
 import { FooterComponent } from './commun/footer/footer.component';
 import { HomeComponent } from './commun/home/home.component';
 import { PageNotFoundComponent } from './commun/page-not-found/page-not-found.component';
-
-import { PublicModule } from './public/public.module';
+import { ChatbotComponent } from './public/components/chat-bot/chat-bot.component';
 import { SuccessComponent } from './public/components/success/success.component';
 import { CancelComponent } from './public/components/cancel/cancel.component';
-import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PublicModule } from './public/public.module';
 
 @NgModule({
   declarations: [
@@ -27,15 +27,16 @@ import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsMod
     HomeComponent,
     PageNotFoundComponent,
     SuccessComponent,
-    CancelComponent
+    CancelComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
-    PublicModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule, // Add ReactiveFormsModule here
-
+    FormsModule,
+    ReactiveFormsModule,
+    PublicModule
   ],
   providers: [],
   bootstrap: [AppComponent]

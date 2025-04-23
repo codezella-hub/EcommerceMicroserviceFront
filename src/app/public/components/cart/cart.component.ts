@@ -13,7 +13,7 @@ import { ProductService } from '../../service/product.service';
 })
 export class CartComponent implements OnInit {
   cart: Cart | null = null;
-  userId: number = 1; 
+  userId: string = "1" ; 
   userEmail: string = 'sofiennemrabet16@gmail.com'; // Email de l'utilisateur
   promoCode: string = '';
   promoMessage: string = '';

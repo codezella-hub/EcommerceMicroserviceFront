@@ -74,24 +74,19 @@
                         <!-- Nav -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="#">Home</a>
-                                  
-                                </li>
-                                <li><a href="#">Shop</a>
-                                    
-                                </li>
-                                <li><a href="#">Pages</a>
-                                    
-                                </li>
-                                <li><a href="#">Blog</a>
-                                    
-                                </li>
-                                <li><a href="#">Elements</a>
-                                    
-                                </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a routerLink="/">Home</a></li>
+                                <li><a routerLink="/user">User</a></li>
+                              <li><a [routerLink]="'/product-categories/products'">Shop</a></li>
+                              <li><a [routerLink]="'/product-categories/create-product'">Add Porduct</a></li>
+                              <li><a [routerLink]="'/product-categories/list-product-admin'">Admin List Products </a></li>
+                                <!--if admin then loula else thenya "louay"-->
+                                <li><a routerLink="/admin/reclamations">Reclamations</a></li>
+                                <!--<li><a routerLink="/user/reclamations">Reclamations</a></li>-->
+                                <li><a routerLink="/chatbot">Chatbot</a></li>
+                                <li><a routerLink="/contact">Contact</a></li> <!-- Assuming you have a contact route -->
                             </ul>
                         </div>
+
                     </div>
 
                     <!-- Hero Meta -->
@@ -115,7 +110,7 @@
                         <div class="cart-area">
                             <div class="cart--btn" [routerLink]="['/cart']"><i class="icofont-cart"></i></div>
 
-                            
+
                         </div>
 
                         <!-- Account -->
@@ -126,7 +121,7 @@
                             <ul class="user-meta-dropdown">
                                 <li class="user-title"><span>Hello,</span> Lim Sarah</li>
                                 <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="order-list.html">Orders List</a></li>
+                                <li><a [routerLink]="['/orders']">Orders List</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="login.html"><i class="icofont-logout"></i> Logout</a></li>
                             </ul>

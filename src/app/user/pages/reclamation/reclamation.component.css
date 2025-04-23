@@ -1,0 +1,14 @@
+/* Add minimal styles to fix the error */
+.breadcumb_area {
+    padding: 20px 0;
+  }
+  
+  .shop_list_area {
+    padding: 40px 0;
+  }
+  
+  .btn-success {
+    height: 38px;
+    display: flex;
+    align-items: center;
+  }

@@ -17,7 +17,7 @@ import { CategoriesCreatePageComponent } from './Pages/categoriesCreatePage/cate
 @NgModule({
   declarations: [
     ProductCategoriesComponent,
-    ProductComponent,
+    //ProductComponent,
     CreateProductComponent,
     SinglePageProductComponent,
     UpdatePageProductComponent,

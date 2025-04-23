@@ -95,6 +95,7 @@ export class CreateProductComponent implements OnInit {
       product.category = formValues.category;
       product.isActive = true;
       product.imageUrl = '';
+      product.idUser= '123'; // Replace with actual user ID
 
       const formData = new FormData();
       formData.append('product', JSON.stringify(product));

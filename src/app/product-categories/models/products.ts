@@ -13,4 +13,5 @@ export class Products {
   discountPercentage!: number;
   isActive: boolean = true;
   category!: Category;
+  idUser!: string;
 }

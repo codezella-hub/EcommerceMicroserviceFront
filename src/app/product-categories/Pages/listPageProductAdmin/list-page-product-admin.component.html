@@ -35,7 +35,7 @@
                     <p>{{ product.stockQuantity }}</p>
                   </div>
                 </td>
-                <td><a href="#" class="btn btn-primary btn-sm" (click)="Update(product)">Update</a></td>
+                <td><a [routerLink]="['/product-categories/update-product', product.id]" class="btn btn-primary btn-sm" >Update</a></td>
               </tr>
               </tbody>
             </table>
