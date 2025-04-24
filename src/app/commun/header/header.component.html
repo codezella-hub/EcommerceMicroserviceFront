@@ -1,9 +1,4 @@
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="spinner-grow" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div>
+
 
 <!-- Header Area -->
 <header class="header_area">
@@ -73,18 +68,27 @@
 
                         <!-- Nav -->
                         <div class="classynav">
-                            <ul>
-                                <li><a routerLink="/">Home</a></li>
-                                <li><a routerLink="/user">User</a></li>
-                              <li><a [routerLink]="'/product-categories/products'">Shop</a></li>
-                              <li><a [routerLink]="'/product-categories/create-product'">Add Porduct</a></li>
-                              <li><a [routerLink]="'/product-categories/list-product-admin'">Admin List Products </a></li>
-                                <!--if admin then loula else thenya "louay"-->
-                                <li><a routerLink="/admin/reclamations">Reclamations</a></li>
-                                <!--<li><a routerLink="/user/reclamations">Reclamations</a></li>-->
-                                <li><a routerLink="/chatbot">Chatbot</a></li>
-                                <li><a routerLink="/contact">Contact</a></li> <!-- Assuming you have a contact route -->
-                            </ul>
+                          <ul>
+
+                            <li><a routerLink="/">Home</a></li>
+                            <li><a [routerLink]="'/product-categories/products'">Shop</a></li>
+                            <li><a routerLink="/contact">Contact</a></li>
+                          </ul>
+                          <ul *ngIf="isUserAuthenticated()" >
+
+
+                            <li><a routerLink="/chatbot">Chatbot</a></li>
+
+
+                          </ul>
+
+                          <ul *ngIf="isAdminAuthenticated()" >
+
+                            <li><a [routerLink]="'/product-categories/create-product'">Add Porduct</a></li>
+                            <li><a [routerLink]="'/product-categories/list-product-admin'">Admin List Products </a></li>
+                            <li><a routerLink="/admin/reclamations">Reclamations</a></li>
+                          </ul>
+
                         </div>
 
                     </div>
@@ -114,18 +118,29 @@
                         </div>
 
                         <!-- Account -->
+                      <div *ngIf="isAuthenticated()">
                         <div class="account-area">
                             <div class="user-thumbnail">
-                                <img src="../../../assets/img/bg-img/user.jpg" alt="">
+                                <img src="../../../assets/USER.jpg" alt="">
                             </div>
                             <ul class="user-meta-dropdown">
-                                <li class="user-title"><span>Hello,</span> Lim Sarah</li>
-                                <li><a href="my-account.html">My Account</a></li>
+                                <li class="user-title"><span>Hello,</span> {{username}}</li>
+                                <li><a (click)="goToAccountManagement()">My Account</a></li>
                                 <li><a [routerLink]="['/orders']">Orders List</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="login.html"><i class="icofont-logout"></i> Logout</a></li>
+                                <li><a [routerLink]="['/show-profile']">Details </a></li>
+                                <li><a href="" (click)="logout()"><i class="icofont-logout"></i> Logout</a></li>
                             </ul>
                         </div>
+                      </div>
+                      <div *ngIf="!isAuthenticated()">
+                      <button
+                        class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center user-btn"
+                        title="Se connecter"
+                        (click)="onLogin()"
+                      >
+                        <i class="bi bi-person"></i>
+                      </button>
+                      </div>
                     </div>
                 </nav>
             </div>

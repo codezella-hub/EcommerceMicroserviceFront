@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div *ngIf="errorMsg" class="alert alert-warning" role="alert">
+    {{ errorMsg }}
+  </div>
+
+  <div *ngIf="userProfile">
+    <h2 class="mb-4">Profil utilisateur</h2>
+    <ul class="list-group mb-3">
+      <li class="list-group-item">
+        📞 Téléphone :
+        <span *ngIf="userProfile.phoneNumber; else missing"> {{ userProfile.phoneNumber }} </span>
+        <ng-template #missing>❌ À renseigner</ng-template>
+      </li>
+
+      <li class="list-group-item">
+        🏠 Adresse :
+        <span *ngIf="userProfile.address; else missing"> {{ userProfile.address }} </span>
+        <ng-template #missing>❌ À renseigner</ng-template>
+      </li>
+
+      <li class="list-group-item">
+        🎂 Date de naissance :
+        <span *ngIf="userProfile.birthDate; else missing"> {{ userProfile.birthDate | date:'dd/MM/yyyy' }} </span>
+        <ng-template #missing>❌ À renseigner</ng-template>
+      </li>
+
+      <li class="list-group-item">
+        🚻 Genre :
+        <span *ngIf="userProfile.gender; else missing"> {{ userProfile.gender === 'MALE' ? 'Homme' : (userProfile.gender === 'FEMALE' ? 'Femme' : userProfile.gender) }} </span>
+        <ng-template #missing>❌ À renseigner</ng-template>
+      </li>
+
+      <li class="list-group-item">
+        📝 Bio :
+        <span *ngIf="userProfile.bio; else missing"> {{ userProfile.bio }} </span>
+        <ng-template #missing>❌ À renseigner</ng-template>
+      </li>
+    </ul>
+
+    <button class="btn btn-primary" (click)="editProfile()">Modifier</button>
+  </div>
+</div>

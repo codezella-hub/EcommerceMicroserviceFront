@@ -1,0 +1,13 @@
+.user-btn {
+  width: 45px;
+  height: 45px;
+  background-color: #553CDF;
+  border: none;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.user-btn:hover {
+  background-color: #3e2dad;
+}

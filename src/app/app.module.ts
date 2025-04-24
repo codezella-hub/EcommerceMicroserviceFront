@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,20 @@ import { CancelComponent } from './public/components/cancel/cancel.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PublicModule } from './public/public.module';
+import {KeycloakService} from "./services/keycloak/keycloak.service";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfileShowComponent } from './profile-show/profile-show.component';
+import { ProfileUpdateComponent } from './profile-update/profile-update.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatSelectModule} from "@angular/material/select";
+import {MatNativeDateModule} from "@angular/material/core";
+export  function kcFactory(kcService:KeycloakService){
+  return () => kcService.init();
+}
 
 @NgModule({
   declarations: [
@@ -28,7 +42,9 @@ import { PublicModule } from './public/public.module';
     PageNotFoundComponent,
     SuccessComponent,
     CancelComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    ProfileShowComponent,
+    ProfileUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +52,29 @@ import { PublicModule } from './public/public.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    PublicModule
+    PublicModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+
+    MatDialogModule,
+
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+
   ],
-  providers: [],
+  providers: [
+    HttpClient,
+    {
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      useFactory: kcFactory,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
