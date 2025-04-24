@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/product-categories/services/product/prod
 import { CategoriesService } from '../../services/product/categories.service';
 import { Products } from 'src/app/product-categories/models/products';
 import { Category } from 'src/app/product-categories/models/category';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-product',
@@ -21,7 +22,9 @@ export class CreateProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private categoriesService: CategoriesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
@@ -109,6 +112,7 @@ console.log('Form Data:', product);
           this.resetFileInput();
           this.productForm.reset();
           this.imagePreview = null;
+          this.router.navigate(['/product-categories/list-product-admin']);
         },
         error: (err) => {
           console.error('❌ Erreur ajout produit :', err);

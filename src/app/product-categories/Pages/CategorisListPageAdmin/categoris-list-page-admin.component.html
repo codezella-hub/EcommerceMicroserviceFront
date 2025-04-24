@@ -1,0 +1,43 @@
+<!-- +++++++++++ Categories List Table ++++++++++++ -->
+<div class="wishlist-table section_padding_100 clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="cart-table wishlist-table">
+          <div class="table-responsive">
+            <table class="table table-bordered mb-30">
+              <thead>
+              <tr>
+                <th scope="col"><i class="icofont-ui-delete"></i></th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let category of categories">
+                <th scope="row">
+                  <button class="btn btn-link p-0" style="color: red" (click)="removeCategory(category.id)">
+                    <i class="icofont-close"></i>
+                  </button>
+                </th>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>
+                  <a [routerLink]="['/product-categories/update-categorie', category.id]" class="btn btn-primary btn-sm">Update</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cart-footer text-right">
+          <div class="back-to-shop">
+            <a [routerLink]="['/product-categories/create-categorie']" class="btn btn-primary">Add New Category</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,26 @@
-<p>categories-update-page works!</p>
+<!-- +++++++++++ Bootstrap’s Form for Updating Categories ++++++++++++ -->
+<div class="shortcodes_area section_padding_100">
+  <div class="container">
+    <div class="shortcodes_content mb-100">
+      <form [formGroup]="categoryForm" (ngSubmit)="updateCategory()">
+        <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input type="text" class="form-control" id="categoryName" formControlName="name" required>
+          <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched" class="text-danger">
+            <small *ngIf="categoryForm.get('name')?.hasError('required')">Name is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="categoryDescription">Description</label>
+          <textarea class="form-control" id="categoryDescription" formControlName="description" required></textarea>
+          <div *ngIf="categoryForm.get('description')?.invalid && categoryForm.get('description')?.touched" class="text-danger">
+            <small *ngIf="categoryForm.get('description')?.hasError('required')">Description is required.</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Update Category</button>
+      </form>
+    </div>
+  </div>
+</div>
