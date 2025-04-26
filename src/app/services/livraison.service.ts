@@ -12,43 +12,40 @@ export class LivraisonService {
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Fetch all livraisons from backend
-   */
-  getAll(): Observable<Livraison[]> {
-    return this.http.get<Livraison[]>(this.apiUrl);
+  getAll(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
   }
-
-  /**
-   * Fetch a single livraison by its ID
-   * @param id ID of the livraison
-   */
   get(id: number): Observable<Livraison> {
     return this.http.get<Livraison>(`${this.apiUrl}/${id}`);
   }
 
-  /**
-   * Create a new livraison
-   * @param livraison Livraison data
-   */
   create(livraison: Livraison): Observable<Livraison> {
     return this.http.post<Livraison>(`${this.apiUrl}/create`, livraison);
   }
 
-  /**
-   * Update an existing livraison by ID
-   * @param id Livraison ID
-   * @param livraison Updated livraison data
-   */
   update(id: number, livraison: Livraison): Observable<Livraison> {
     return this.http.put<Livraison>(`${this.apiUrl}/update/${id}`, livraison);
   }
 
-  /**
-   * Delete a livraison by its ID
-   * @param id Livraison ID
-   */
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  // ✅ New method to mark livraison as Livrée
+  markAsLivree(id: number): Observable<Livraison> {
+    return this.http.put<Livraison>(`${this.apiUrl}/${id}/mark-as-livree`, {});
+  }
+  exportToPdf(): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/export/pdf`, {
+      responseType: 'blob' // important for downloading binary data
+    });
+  }
+  getAllLivreurs(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8087/api/livreurs');
+  }
+  
+  assignLivreur(livraisonId: number, livreurId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${livraisonId}/assign/${livreurId}`, {});
+  }
+  
 }
